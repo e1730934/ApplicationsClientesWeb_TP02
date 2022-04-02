@@ -19,7 +19,6 @@
                         <div class="field">
                             <div class="control select">
                                 <select class="select" id="studio" name="studio" v-model="studio">
-                                    <!--                                    TODO: V-FOR-->
                                     <option selected></option>
                                     <option
                                         v-for="s in studios"
@@ -43,7 +42,7 @@
                     <span>
                         <strong>
                             <span class="title">Genres</span>
-                        </strong>
+                        </strong>/
                     </span>
                 </h3>
             </div>
@@ -69,14 +68,31 @@
         <div class="block">
             <div class="columns is-multiline is-mobile">
                 <t-v-show-view
-                    v-for="tvShow in tvShows"
+                    v-for="tvShow in filteredTVShows"
                     v-bind:key="tvShow.tvshowId"
                     v-bind:tvshow="tvShow">
                 </t-v-show-view>
             </div>
         </div>
     </div>
-    <div class="section">PAGINATION</div>
+    <div class="section">
+        <nav class="pagination" role="navigation" aria-label="pagination">
+            <a class="pagination-previous" title="This is the first page">&lt;</a>
+            <a class="pagination-next">&gt;</a>
+            <ul class="pagination-list">
+                <li>
+                    <a class="pagination-link is-current" aria-label="Page 1"
+                       aria-current="page">1</a>
+                </li>
+                <li>
+                    <a class="pagination-link" aria-label="Goto page 2">2</a>
+                </li>
+                <li>
+                    <a class="pagination-link" aria-label="Goto page 3">3</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
 </template>
 
 <script>
@@ -121,7 +137,19 @@ export default {
             }
         },
     },
-    computed: {},
+    computed: {
+        filteredTVShows() {
+            const { title, studio, genre } = this;
+            return this.tvShows.filter((tvShow) => (
+                (title === '' || tvShow.title.toLowerCase()
+                    .includes(title.toLowerCase()))
+                && (studio === '' || tvShow.studio.studioId === studio)
+                && (genre.length === 0
+                    || genre.every((g) => tvShow.genres.map((genreTvShow) => genreTvShow.genreId)
+                        .includes(g)))
+            ));
+        },
+    },
 
 };
 </script>
