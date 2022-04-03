@@ -42,7 +42,7 @@
                     <span>
                         <strong>
                             <span class="title">Genres</span>
-                        </strong>/
+                        </strong>
                     </span>
                 </h3>
             </div>
@@ -80,16 +80,19 @@
             <a class="pagination-previous" title="This is the first page">&lt;</a>
             <a class="pagination-next">&gt;</a>
             <ul class="pagination-list">
-                <li>
-                    <a class="pagination-link is-current" aria-label="Page 1"
-                       aria-current="page">1</a>
+<!--                <li>-->
+<!--                    <button class="pagination-link is-current" aria-label="Page 1"-->
+<!--                       aria-current="page">{{ incrementIndex(0)}}</button>-->
+<!--                </li>-->
+                <li >
+                    <button class="pagination-link" aria-label="Goto next page"
+                            v-for=" (page, key) in pagination.nbrChunk" :key="key">
+                        {{ incrementIndex(key)}}
+                    </button>
                 </li>
-                <li>
-                    <a class="pagination-link" aria-label="Goto page 2">2</a>
-                </li>
-                <li>
-                    <a class="pagination-link" aria-label="Goto page 3">3</a>
-                </li>
+<!--                <li>-->
+<!--                    <button class="pagination-link" aria-label="Goto page 3">3</button>-->
+<!--                </li>-->
             </ul>
         </nav>
     </div>
@@ -110,14 +113,21 @@ export default {
             genre: [],
             studios: [],
             tvShows: [],
+            listTvShowsFiltered: [],
+            index: 0,
         };
     },
     mounted() {
         this.getStudios();
         this.getGenres();
         this.getTVShows();
+        // this.getFilteredTVShows();
     },
     methods: {
+        incrementIndex(key) {
+            this.index += 1;
+            return key + 1;
+        },
         async getStudios() {
             const response = await fetch(`${svrURL}/studios`);
             if (response.ok) {
@@ -136,10 +146,23 @@ export default {
                 this.tvShows = await response.json();
             }
         },
+        getFilteredTVShows() {
+            const chunkSize = 8;
+            let chunked = [];
+            for (let i = 0; i < this.filteredTVShows().length; i += chunkSize) {
+                chunked += this.filteredTVShows()
+                    .slice(i, i + chunkSize);
+            }
+            this.listTvShowsFiltered = chunked;
+        },
     },
     computed: {
         filteredTVShows() {
-            const { title, studio, genre } = this;
+            const {
+                title,
+                studio,
+                genre,
+            } = this;
             return this.tvShows.filter((tvShow) => (
                 (title === '' || tvShow.title.toLowerCase()
                     .includes(title.toLowerCase()))
@@ -148,6 +171,16 @@ export default {
                     || genre.every((g) => tvShow.genres.map((genreTvShow) => genreTvShow.genreId)
                         .includes(g)))
             ));
+        },
+        pagination() {
+            let calculChunk = 1;
+            if (Math.floor(this.filteredTVShows.length / 8) > 0) {
+                calculChunk = Math.floor(this.filteredTVShows.length / 8);
+            }
+            return {
+                total: this.filteredTVShows.length,
+                nbrChunk: calculChunk,
+            };
         },
     },
 

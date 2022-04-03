@@ -1,5 +1,5 @@
 <template>
-    <div class="column is-3-desktop is-4-tablet is-6-mobile">
+    <div class="column is-3-desktop is-4-tablet is-12-mobile">
         <div class="has-text-black">
             <div class="card">
                 <div class="card-image">
