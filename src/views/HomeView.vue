@@ -2,7 +2,7 @@
     <div class="section">
         <h1 class="title is-1 has-text-centered">TP02</h1>
     </div>
-    <div class="section">
+    <div class="section" v-on:load="chuncked">
         <div class="row columns is-multiline is-mobile">
             <div class="column is-horizontal">
                 <div class="field is-horizontal">
@@ -68,7 +68,7 @@
         <div class="block">
             <div class="columns is-multiline is-mobile">
                 <t-v-show-view
-                    v-for="tvShow in filteredTVShows"
+                    v-for="tvShow in this.chunkedTvShows[this.currentPage]"
                     v-bind:key="tvShow.tvshowId"
                     v-bind:tvshow="tvShow">
                 </t-v-show-view>
@@ -77,22 +77,19 @@
     </div>
     <div class="section">
         <nav class="pagination" role="navigation" aria-label="pagination">
-            <a class="pagination-previous" title="This is the first page">&lt;</a>
-            <a class="pagination-next">&gt;</a>
+            <button class="pagination-previous" v-if="currentPage>0"
+                    v-on:click="this.currentPage -=1">&lt;</button>
+            <button class="pagination-next" v-if="currentPage< pagination.nbrChunk -1"
+            v-on:click="this.currentPage +=1">&gt;</button>
             <ul class="pagination-list">
-<!--                <li>-->
-<!--                    <button class="pagination-link is-current" aria-label="Page 1"-->
-<!--                       aria-current="page">{{ incrementIndex(0)}}</button>-->
-<!--                </li>-->
                 <li >
                     <button class="pagination-link" aria-label="Goto next page"
-                            v-for=" (page, key) in pagination.nbrChunk" :key="key">
+                            v-for=" (page, key) in pagination.nbrChunk" :key="key"
+                            v-on:click="this.currentPage=key"
+                            v-bind:class="{'is-current' : this.currentPage===key}">
                         {{ incrementIndex(key)}}
                     </button>
                 </li>
-<!--                <li>-->
-<!--                    <button class="pagination-link" aria-label="Goto page 3">3</button>-->
-<!--                </li>-->
             </ul>
         </nav>
     </div>
@@ -113,19 +110,24 @@ export default {
             genre: [],
             studios: [],
             tvShows: [],
-            listTvShowsFiltered: [],
-            index: 0,
+            chunkedTvShows: [],
+            currentPage: 0,
         };
     },
-    mounted() {
-        this.getStudios();
-        this.getGenres();
-        this.getTVShows();
-        // this.getFilteredTVShows();
+    watch: {
+        title() {
+            this.chuncked();
+        },
+        studio() {
+            this.chuncked();
+        },
+        genre() {
+            this.chuncked();
+        },
     },
+
     methods: {
         incrementIndex(key) {
-            this.index += 1;
             return key + 1;
         },
         async getStudios() {
@@ -146,14 +148,18 @@ export default {
                 this.tvShows = await response.json();
             }
         },
-        getFilteredTVShows() {
-            const chunkSize = 8;
-            let chunked = [];
-            for (let i = 0; i < this.filteredTVShows().length; i += chunkSize) {
-                chunked += this.filteredTVShows()
-                    .slice(i, i + chunkSize);
+        async chuncked() {
+            async function sleep(number) {
+                return new Promise((resolve) => { setTimeout(resolve, number); });
             }
-            this.listTvShowsFiltered = chunked;
+            await sleep(500);
+            this.chunkedTvShows = [];
+            this.filteredTVShows.forEach((tvShow, key) => {
+                if (key % 8 === 0) {
+                    this.chunkedTvShows.push([]);
+                }
+                this.chunkedTvShows[this.chunkedTvShows.length - 1].push(tvShow);
+            });
         },
     },
     computed: {
@@ -173,15 +179,19 @@ export default {
             ));
         },
         pagination() {
-            let calculChunk = 1;
-            if (Math.floor(this.filteredTVShows.length / 8) > 0) {
-                calculChunk = Math.floor(this.filteredTVShows.length / 8);
-            }
+            let nbrChunk = Math.ceil(this.filteredTVShows.length / 8);
+            if (nbrChunk <= 0) { nbrChunk = 1; }
             return {
-                total: this.filteredTVShows.length,
-                nbrChunk: calculChunk,
+                nbrTvShow: this.filteredTVShows.length,
+                nbrChunk,
             };
         },
+    },
+    mounted() {
+        this.getStudios();
+        this.getGenres();
+        this.getTVShows();
+        this.chuncked();
     },
 
 };
