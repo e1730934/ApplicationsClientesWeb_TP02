@@ -2,7 +2,7 @@
     <div class="section">
         <h1 class="title is-1 has-text-centered">TP02</h1>
     </div>
-    <div class="section">
+    <div class="section" v-on:load="chuncked">
         <div class="row columns is-multiline is-mobile">
             <div class="column is-horizontal">
                 <div class="field is-horizontal">
