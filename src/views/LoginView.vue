@@ -1,0 +1,83 @@
+<template>
+    <div class="container">
+        <div class="section">
+            <div class="content">
+                <div class="field">
+                    <label for="email" class="label">Username</label>
+                    <div class="control has-icons-left">
+                        <input id="email" type="email" placeholder="e1234567" class="input"
+                               autocomplete="email" required
+                               v-model="username">
+                        <span class="icon is-small is-left"><i class="fa fa-envelope"></i></span>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="password" class="label">Password</label>
+                    <div class="control has-icons-left">
+                        <input id="password" type="password"
+                               placeholder="*******" class="input"
+                               autocomplete="password"
+                               required
+                               v-model="password">
+                        <span class="icon is-small is-left"><i class="fa fa-lock"></i></span>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <button id="connexion" class="button is-success"
+                                v-on:click.prevent="login">
+                            Connexion
+                        </button>
+                        <router-link v-bind:to="{ name: 'home' }"
+                                     class="button is-danger">Annuler</router-link>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+import { svrURL } from '@/constants';
+
+export default {
+    name: 'LoginView',
+    data() {
+        return {
+            username: '',
+            password: '',
+        };
+    },
+    methods: {
+        async login() {
+            //   "username": "e1234567","password": "e1234567"
+            const { username } = this;
+            const { password } = this;
+            const body = {
+                username,
+                password,
+            };
+            try {
+                const resToken = await fetch(`${svrURL}/auth/token`, {
+                    headers: { 'Content-Type': 'application/json' },
+                    method: 'POST',
+                    body: JSON.stringify(body),
+                });
+                if (resToken.ok) {
+                    const data = await resToken.json();
+                    this.$root.$data.token = data.token;
+                    await this.$router.push('/');
+                } else {
+                    console.error('une erreur s\'est produite');
+                }
+            } catch (err) {
+                console.log(err.message);
+            }
+        },
+    },
+};
+</script>
+
+<style scoped>
+
+</style>
