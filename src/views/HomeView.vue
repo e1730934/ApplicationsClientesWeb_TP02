@@ -2,7 +2,7 @@
     <div class="section">
         <h1 class="title is-1 has-text-centered">TP02</h1>
     </div>
-    <div class="section" v-on:load="chuncked">
+    <div class="section">
         <div class="row columns is-multiline is-mobile">
             <div class="column is-horizontal">
                 <div class="field is-horizontal">
@@ -68,7 +68,7 @@
         <div class="block">
             <div class="columns is-multiline is-mobile">
                 <t-v-show-view
-                    v-for="tvShow in this.chunkedTvShows[this.currentPage]"
+                    v-for="tvShow in chuncked[this.currentPage]"
                     v-bind:key="tvShow.tvshowId"
                     v-bind:tvshow="tvShow">
                 </t-v-show-view>
@@ -79,12 +79,12 @@
         <nav class="pagination" role="navigation" aria-label="pagination">
             <button class="pagination-previous" v-if="currentPage>0"
                     v-on:click="this.currentPage -=1">&lt;</button>
-            <button class="pagination-next" v-if="currentPage< pagination.nbrChunk -1"
+            <button class="pagination-next" v-if="currentPage< pagination -1"
             v-on:click="this.currentPage +=1">&gt;</button>
             <ul class="pagination-list">
                 <li >
                     <button class="pagination-link" aria-label="Goto next page"
-                            v-for=" (page, key) in pagination.nbrChunk" :key="key"
+                            v-for=" (page, key) in pagination" :key="key"
                             v-on:click="this.currentPage=key"
                             v-bind:class="{'is-current' : this.currentPage===key}">
                         {{ incrementIndex(key)}}
@@ -110,22 +110,9 @@ export default {
             genre: [],
             studios: [],
             tvShows: [],
-            chunkedTvShows: [],
             currentPage: 0,
         };
     },
-    watch: {
-        title() {
-            this.chuncked();
-        },
-        studio() {
-            this.chuncked();
-        },
-        genre() {
-            this.chuncked();
-        },
-    },
-
     methods: {
         incrementIndex(key) {
             return key + 1;
@@ -148,19 +135,6 @@ export default {
                 this.tvShows = await response.json();
             }
         },
-        async chuncked() {
-            async function sleep(number) {
-                return new Promise((resolve) => { setTimeout(resolve, number); });
-            }
-            await sleep(500);
-            this.chunkedTvShows = [];
-            this.filteredTVShows.forEach((tvShow, key) => {
-                if (key % 8 === 0) {
-                    this.chunkedTvShows.push([]);
-                }
-                this.chunkedTvShows[this.chunkedTvShows.length - 1].push(tvShow);
-            });
-        },
     },
     computed: {
         filteredTVShows() {
@@ -179,19 +153,23 @@ export default {
             ));
         },
         pagination() {
-            let nbrChunk = Math.ceil(this.filteredTVShows.length / 8);
-            if (nbrChunk <= 0) { nbrChunk = 1; }
-            return {
-                nbrTvShow: this.filteredTVShows.length,
-                nbrChunk,
-            };
+            return Math.ceil(this.filteredTVShows.length / 8);
+        },
+        chuncked() {
+            const chunkedTvShows = [];
+            this.filteredTVShows.forEach((tvShow, key) => {
+                if (key % 8 === 0) {
+                    chunkedTvShows.push([]);
+                }
+                chunkedTvShows[chunkedTvShows.length - 1].push(tvShow);
+            });
+            return chunkedTvShows;
         },
     },
     mounted() {
         this.getStudios();
         this.getGenres();
         this.getTVShows();
-        this.chuncked();
     },
 
 };
