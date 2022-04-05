@@ -1,33 +1,34 @@
 <template>
     <div class="section">
-        <h1 class="title is-1 has-text-centered">TP02</h1>
-    </div>
-    <div class="section">
-        <div class="row columns is-multiline is-mobile">
-            <div class="column is-horizontal">
-                <div class="field is-horizontal">
-                    <label class="field-label label" for="title">Title: </label>
-                    <input class="field-input input" id="title" name="title" v-model="title">
+        <div class="columns is-centered">
+            <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                    <label class="label" for="title">Title: </label>
+                </div>
+                <div class="field-body">
+                    <div class="field">
+                        <p class="control">
+                            <input class="input" id="title" name="title" v-model="title">
+                        </p>
+                    </div>
                 </div>
             </div>
-            <div class="column">
-                <div class="field is-horizontal">
-                    <div class="field-label is-normal">
-                        <label class="label " for="studio">Studio: </label>
-                    </div>
-                    <div class="field-body">
-                        <div class="field">
-                            <div class="control select">
-                                <select class="select" id="studio" name="studio" v-model="studio">
-                                    <option selected></option>
-                                    <option
-                                        v-for="s in studios"
-                                        v-bind:key="s.studioId"
-                                        v-bind:value="s.studioId">
-                                        {{ s.name }}
-                                    </option>
-                                </select>
-                            </div>
+            <div class="field is-horizontal" style="padding-left: 20px;">
+                <div class="field-label is-normal">
+                    <label class="label " for="studio">Studio: </label>
+                </div>
+                <div class="field-body">
+                    <div class="field">
+                        <div class="control select">
+                            <select class="select" id="studio" name="studio" v-model="studio">
+                                <option selected></option>
+                                <option
+                                    v-for="s in studios"
+                                    v-bind:key="s.studioId"
+                                    v-bind:value="s.studioId">
+                                    {{ s.name }}
+                                </option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -78,16 +79,18 @@
     <div class="section">
         <nav class="pagination" role="navigation" aria-label="pagination">
             <button class="pagination-previous" v-if="currentPage>0"
-                    v-on:click="this.currentPage -=1">&lt;</button>
+                    v-on:click="this.currentPage -=1">&lt;
+            </button>
             <button class="pagination-next" v-if="currentPage< pagination -1"
-            v-on:click="this.currentPage +=1">&gt;</button>
+                    v-on:click="this.currentPage +=1">&gt;
+            </button>
             <ul class="pagination-list">
-                <li >
+                <li>
                     <button class="pagination-link" aria-label="Goto next page"
                             v-for=" (page, key) in pagination" :key="key"
                             v-on:click="this.currentPage=key"
                             v-bind:class="{'is-current' : this.currentPage===key}">
-                        {{ incrementIndex(key)}}
+                        {{ incrementIndex(key) }}
                     </button>
                 </li>
             </ul>
