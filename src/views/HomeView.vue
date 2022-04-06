@@ -90,7 +90,7 @@
                             v-for=" (page, key) in pagination" :key="key"
                             v-on:click="this.currentPage=key"
                             v-bind:class="{'is-current' : this.currentPage===key}">
-                        {{ incrementIndex(key) }}
+                        {{ key+ 1 }}
                     </button>
                 </li>
             </ul>
@@ -117,9 +117,6 @@ export default {
         };
     },
     methods: {
-        incrementIndex(key) {
-            return key + 1;
-        },
         async getStudios() {
             const response = await fetch(`${svrURL}/studios`);
             if (response.ok) {
