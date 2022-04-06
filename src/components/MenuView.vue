@@ -3,13 +3,14 @@
         <div class="navbar-brand">
             <div class="navbar-item">&nbsp;</div>
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
-               data-target="navbarBasicExample">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
+               data-target="navbarBasicExample" @click="makeBurger " @keydown="makeBurger"
+               v-bind:class="{ 'is-active': activator }" tabindex="0">
+                <span aria-hidden="true" tabindex="0"></span>
+                <span aria-hidden="true" tabindex="-1"></span>
+                <span aria-hidden="true" tabindex="-1"></span>
             </a>
         </div>
-        <div id="navbarBasicExample" class="navbar-menu">
+        <div id="navbarBasicExample" class="navbar-menu" v-bind:class="{ 'is-active': activator }">
             <div class="navbar-start">
                 <router-link v-bind:to="{ name: 'home' }"
                              class="navbar-item">TP02
@@ -39,10 +40,19 @@
 <script>
 export default {
     name: 'MenuView',
+    data() {
+        return {
+            activator: false,
+        };
+    },
     methods: {
         async signOut() {
             this.$root.$data.token = '';
             await this.$router.push('/');
+        },
+        makeBurger() {
+            this.activator = !this.activator;
+            return this.activator;
         },
     },
 };
