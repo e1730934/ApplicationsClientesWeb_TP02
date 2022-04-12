@@ -6,8 +6,9 @@
                     <div class="message is-danger" v-if="error!==''">
                         <p class="message-body">{{ error }}</p>
                     </div>
-                    <div class="message is-success" v-if="success!==''"></div>
-                    <p class="message-body">{{ success }}</p>
+                    <div class="message is-success" v-if="success!==''">
+                        <p class="message-body">{{ success }}</p>
+                    </div>
                     <label for="email" class="label">Email</label>
                     <div class="control has-icons-left">
                         <input id="email" type="email" placeholder="e1234567@site.com"
