@@ -2,9 +2,10 @@
     <div v-if="episode!==null">
         <div class="block">
             <h1 class="title is-3 has-text-centered">{{ episode.title }}</h1>
-            <h3 class="has-text-centered">{{episode.number}}
+            <h3 class="title is-5 has-text-centered">{{episode.seasonNumber}}
+                <span> - </span>
                 <span>{{episode.number}}</span>
-                <span>-</span>
+                <span> - </span>
                 <span>{{episode.title}}</span>
             </h3>
             <p>{{episode.runtime}} mins</p>
