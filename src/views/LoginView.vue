@@ -3,9 +3,9 @@
         <div class="section">
             <div class="content">
                 <div class="field">
-                    <label for="email" class="label">Username</label>
+                    <label for="username" class="label">Username</label>
                     <div class="control has-icons-left">
-                        <input id="email" type="email" placeholder="e1234567" class="input"
+                        <input id="username" type="text" placeholder="e1234567" class="input"
                                autocomplete="email" required
                                v-model="username">
                         <span class="icon is-small is-left"><i class="fa fa-envelope"></i></span>
@@ -50,7 +50,7 @@ export default {
     },
     methods: {
         async login() {
-            //   "username": "e1234567","password": "e1234567"
+            //   "username": "e1730934","password": "e1730934"
             const { username } = this;
             const { password } = this;
             const body = {
