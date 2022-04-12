@@ -37,7 +37,7 @@
 
 <script>
 export default {
-    name: 'TVShowView',
+    name: 'TVShowComponent',
     props: {
         tvshow: Object,
     },

@@ -1,20 +1,20 @@
 <template>
     <div v-if="episode!==null">
         <div class="block">
-            <h1 class="title is-3">{{ episode.season.tvshow.title }}</h1>
-            <h3>{{episode.season.number}}
+            <h1 class="title is-3 has-text-centered">{{ episode.title }}</h1>
+            <h3 class="has-text-centered">{{episode.number}}
                 <span>{{episode.number}}</span>
                 <span>-</span>
                 <span>{{episode.title}}</span>
             </h3>
-            <div>{{episode.runtime}} mins</div>
-            <div>{{episode.season.tvshow.tvParentalGuideline}}</div>
-            <div class="has-text-justified">{{episode.plot}}</div>
-            <div>
+            <p>{{episode.runtime}} mins</p>
+            <p>{{episode.tvParentalGuideline}}</p>
+            <p class="has-text-justified">{{episode.plot}}</p>
+            <div class="has-text-centered" style="padding-top: 50px;">
                 <img v-bind:alt="episode.title" v-bind:src="episode.imgURL"
-                     style="position: relative" />
-                <img alt="play" src="https://4d6tp2.sv55.cmaisonneuve.qc.ca/img/play.9fcb8068.png"
-                     style="position: relative; z-index: 1; left: -400px;"/>
+                     style="position: relative;"/>
+                <img alt="play" :src="image"
+                     class="asset"/>
             </div>
         </div>
     </div>
@@ -22,12 +22,14 @@
 
 <script>
 import { svrURL } from '@/constants';
+import image from '@/assets/play.png';
 
 export default {
-    name: 'EpisodeDetails',
+    name: 'detailsEpisodeView',
     data() {
         return {
             episode: null,
+            image,
         };
     },
     methods: {
@@ -43,5 +45,5 @@ export default {
 </script>
 
 <style scoped>
-
+.asset{position:absolute;left:50%;transform:translateX(-50%)}
 </style>

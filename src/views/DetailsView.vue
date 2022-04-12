@@ -39,55 +39,28 @@
             </div>
         </div>
         <div class="columns scrolling-wrapper-flexbox">
-            <div class="column is-2"
-                 v-for="r in tvShowData.roles"
-                 v-bind:key="r.roleId">
-                <div class="card">
-                    <div class="card-image">
-                        <figure class="image is-3by4">
-                            <img v-bind:src="r.imgURL"
-                                 v-bind:alt="r.name" class="image">
-                        </figure>
-                    </div>
-                    <div class="card-content">
-                        <div class="content has-text-centered">
-                            <p class="has-text-weight-bold">{{ r.name }}</p>
-                            <p class="subtitle is-6">{{ r.character }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <role-component
+                v-for="r in tvShowData.roles"
+                v-bind:key="r.roleId"
+                v-bind:r="r"></role-component>
         </div>
         <div class="columns scrolling-wrapper-flexbox">
-            <div class="column is-3"
-                 v-for="s in tvShowData.seasons"
-                 v-bind:key="s.seasonId">
-                <router-link v-bind:to="{name:'episode',params:{id:s.seasonId}}">
-                <div class="card">
-                    <div class="card-image">
-                        <figure class="image is-3by4">
-                            <img v-bind:src="s.imgURL"
-                                 v-bind:alt="s.number" class="image">
-                        </figure>
-                    </div>
-                    <div class="card-content">
-                        <div class="content has-text-centered">
-                            <p class="title is-4 has-text-weight-bold">{{ 'Season '+ s.number }}</p>
-                            <p class="subtitle is-6">{{ s.episodeCount }} episodes</p>
-                        </div>
-                    </div>
-                </div>
-                </router-link>
-            </div>
+            <season-component
+                v-for="s in tvShowData.seasons"
+                v-bind:key="s.seasonId"
+                v-bind:s="s"></season-component>
         </div>
     </div>
 </template>
 
 <script>
 import { svrURL } from '@/constants';
+import RoleComponent from '@/components/RoleComponent.vue';
+import SeasonComponent from '@/components/SeasonComponent.vue';
 
 export default {
     name: 'DetailsView',
+    components: { SeasonComponent, RoleComponent },
     data() {
         return {
             tvShowData: null,

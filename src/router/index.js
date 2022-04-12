@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '@/views/HomeView.vue';
 import DetailsView from '@/views/DetailsView.vue';
-import EpisodesView from '@/views/EpisodesView.vue';
-import EpisodeDetails from '@/views/EpisodeDetails.vue';
+import SeasonEpisodesView from '@/views/SeasonEpisodesView.vue';
+import DetailsEpisodeView from '@/views/DetailsEpisodeView.vue';
 import LoginView from '@/views/LoginView.vue';
 
 const routes = [
@@ -19,12 +19,12 @@ const routes = [
     {
         path: '/episodes/:id',
         name: 'episode',
-        component: EpisodesView,
+        component: SeasonEpisodesView,
     },
     {
         path: '/episodedetails/:id',
         name: 'episodedetails',
-        component: EpisodeDetails,
+        component: DetailsEpisodeView,
     },
     {
         path: '/login',
