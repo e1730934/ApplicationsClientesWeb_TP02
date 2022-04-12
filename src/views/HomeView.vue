@@ -68,11 +68,11 @@
     <div class="section">
         <div class="block">
             <div class="columns is-multiline is-mobile">
-                <t-v-show-view
+                <t-v-show-component
                     v-for="tvShow in chuncked[this.currentPage]"
                     v-bind:key="tvShow.tvshowId"
                     v-bind:tvshow="tvShow">
-                </t-v-show-view>
+                </t-v-show-component>
             </div>
         </div>
     </div>
@@ -100,11 +100,11 @@
 
 <script>
 import { svrURL } from '@/constants';
-import TVShowView from '@/components/TVShowView.vue';
+import TVShowComponent from '@/components/TVShowComponent.vue';
 
 export default {
     name: 'HomeView',
-    components: { TVShowView },
+    components: { TVShowComponent },
     data() {
         return {
             title: '',
@@ -114,6 +114,7 @@ export default {
             studios: [],
             tvShows: [],
             currentPage: 0,
+            nbrEpisodesPerPage: 8,
         };
     },
     methods: {
@@ -153,12 +154,12 @@ export default {
             ));
         },
         pagination() {
-            return Math.ceil(this.filteredTVShows.length / 8);
+            return Math.ceil(this.filteredTVShows.length / this.nbrEpisodesPerPage);
         },
         chuncked() {
             const chunkedTvShows = [];
             this.filteredTVShows.forEach((tvShow, key) => {
-                if (key % 8 === 0) {
+                if (key % this.nbrEpisodesPerPage === 0) {
                     chunkedTvShows.push([]);
                 }
                 chunkedTvShows[chunkedTvShows.length - 1].push(tvShow);

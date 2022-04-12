@@ -39,7 +39,7 @@
 
 <script>
 export default {
-    name: 'MenuView',
+    name: 'MenuComponent',
     data() {
         return {
             activator: false,
