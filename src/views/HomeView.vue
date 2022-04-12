@@ -136,9 +136,13 @@ export default {
                 this.tvShows = await response.json();
             }
         },
+        resetPage() {
+            this.currentPage = 0;
+        },
     },
     computed: {
         filteredTVShows() {
+            this.resetPage();
             const {
                 title,
                 studio,
