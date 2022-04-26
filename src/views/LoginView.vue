@@ -51,8 +51,7 @@ export default {
     methods: {
         async login() {
             //   "username": "e1730934","password": "e1730934"
-            const { username } = this;
-            const { password } = this;
+            const { username, password } = this;
             const body = {
                 username,
                 password,
@@ -65,7 +64,7 @@ export default {
                 });
                 if (resToken.ok) {
                     const data = await resToken.json();
-                    this.$root.$data.token = data.token;
+                    this.$store.dispatch('setToken', data.token);
                     await this.$router.push('/');
                 } else {
                     console.error('une erreur s\'est produite');

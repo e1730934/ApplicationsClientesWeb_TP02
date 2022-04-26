@@ -7,8 +7,8 @@
     <div class="section">
         <ul>
             <li>
-                <b>this.$root.$data.token:</b>
-                {{this.$root.$data.token}}
+                <b>this.$store.state.token:</b>
+                {{this.$store.state.token }}
             </li>
         </ul>
     </div>

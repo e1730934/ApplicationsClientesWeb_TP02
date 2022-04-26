@@ -115,8 +115,7 @@ export default {
             })
                 .then((response) => {
                     if (response.status === 201) {
-                        this.success = ('Inscription réussie');
-                        this.$router.push({ name: 'login' });
+                        this.success = ('Inscription réussie, veuillez maintenant vous connecter.');
                     } else {
                         this.error = ('Email déjà utilisé');
                     }

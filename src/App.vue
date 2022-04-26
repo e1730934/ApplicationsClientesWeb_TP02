@@ -14,7 +14,6 @@ export default {
     components: { MenuComponent },
     data() {
         return {
-            token: '',
         };
     },
     mounted() {
@@ -25,14 +24,14 @@ export default {
         loadToken() {
             const t = sessionStorage.getItem('token');
             if (t) {
-                this.token = t;
+                this.$store.dispatch('setToken', t);
             }
         },
 
     },
     watch: {
         // Lorsque token change de valeur, stocker dans sessionStorage
-        token(newToken) {
+        'this.$store.state.token': function (newToken) {
             sessionStorage.setItem('token', newToken);
         },
     },

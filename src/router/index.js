@@ -7,6 +7,7 @@ import LoginView from '@/views/LoginView.vue';
 import SignUpView from '@/views/SignUpView.vue';
 import ProfileView from '@/views/ProfileView.vue';
 import AboutView from '@/views/AboutView.vue';
+import HistoryView from '@/views/HistoryView.vue';
 
 const routes = [
     {
@@ -48,6 +49,11 @@ const routes = [
         path: '/about',
         name: 'about',
         component: AboutView,
+    },
+    {
+        path: '/history',
+        name: 'history',
+        component: HistoryView,
     },
 ];
 

@@ -16,36 +16,41 @@
                              class="navbar-item">TP02
                 </router-link>
                 <router-link v-bind:to="{name: 'profile'}"
-                             v-if="this.$root.$data.token"
+                             v-if="this.$store.state.token"
                              class="navbar-item">Mon profil
                 </router-link>
             </div>
             <div class="navbar-end">
                 <div class="navbar-item">
                     <div class="buttons">
+                        <router-link v-bind:to="{name: 'history'}"
+                                     class="navbar-item is-primary"
+                                     v-if="this.$store.state.token &&
+                                            this.$route.fullPath!==`/login`">
+                            Historique
+                        </router-link>
                         <router-link v-bind:to="{ name: 'signup' }"
                                      class="navbar-item is-primary"
-                                     v-if="!this.$root.$data.token &&
+                                     v-if="!this.$store.state.token &&
                                              this.$route.fullPath!==`/signup`">
                             Inscription
                         </router-link>
                         <router-link id="afficherConnexion" v-bind:to="{ name: 'login' }"
-                                     v-if="!this.$root.$data.token &&
+                                     v-if="!this.$store.state.token &&
                                              this.$route.fullPath!==`/login`"
                                      class="navbar-item is-light">Connexion
                         </router-link>
                         <router-link v-bind:to="{name: 'profile'}"
-                                     v-if="this.$root.$data.token"
+                                     v-if="this.$store.state.token"
                                      class="navbar-item">Mon profil
                         </router-link>
                         <router-link id="afficherDeconnexion" v-bind:to="{ name: 'home' }"
-                                     v-if="this.$root.$data.token &&
+                                     v-if="this.$store.state.token &&
                                             this.$route.fullPath!==`/login`"
                                      class="navbar-item is-danger"
                                      v-on:click="signOut">Déconnexion
                         </router-link>
                         <router-link v-bind:to="{name: 'about'}"
-                                     v-if="this.$root.$data.token"
                                      class="navbar-item">À propos
                         </router-link>
                     </div>
@@ -65,7 +70,7 @@ export default {
     },
     methods: {
         async signOut() {
-            this.$root.$data.token = '';
+            this.$store.dispatch('setToken', '');
             await this.$router.push('/');
         },
         makeBurger() {

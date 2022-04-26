@@ -28,5 +28,6 @@ module.exports = {
             },
         ],
         'vuejs-accessibility/media-has-caption': ['off'],
+        'func-names': ['off'],
     },
 };
