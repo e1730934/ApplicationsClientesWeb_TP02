@@ -15,10 +15,6 @@
                 <router-link v-bind:to="{ name: 'home' }"
                              class="navbar-item">TP02
                 </router-link>
-                <router-link v-bind:to="{name: 'profile'}"
-                             v-if="this.$store.state.token"
-                             class="navbar-item">Mon profil
-                </router-link>
             </div>
             <div class="navbar-end">
                 <div class="navbar-item">

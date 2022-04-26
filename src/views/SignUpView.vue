@@ -9,11 +9,12 @@
                         <p class="message-body">{{ success }}</p>
                     </div>
                 </div>
+                <form>
                 <div class="field">
                     <label for="email" class="label">Email</label>
                     <div class="control has-icons-left">
                         <input id="email" type="email" placeholder="e1234567@site.com"
-                               class="input" autocomplete="email" required
+                               class="input" autocomplete="email" required aria-required="true"
                                v-model="email">
                         <span class="icon is-small is-left">
                                 <i class="fa fa-envelope"></i></span>
@@ -23,7 +24,7 @@
                     <label for="username" class="label">Username</label>
                     <div class="control has-icons-left">
                         <input id="username" type="text" placeholder="e1234567" class="input"
-                               autocomplete="username" required
+                               autocomplete="username" required aria-required="true"
                                v-model="username">
                         <span class="icon is-small is-left">
                                 <i class="fa fa-envelope"></i></span>
@@ -35,7 +36,7 @@
                         <input id="password" type="password"
                                placeholder="*******" class="input"
                                autocomplete="password"
-                               required
+                               required aria-required="true"
                                v-model="password">
                         <span class="icon is-small is-left"><i class="fa fa-lock"></i></span>
                     </div>
@@ -46,22 +47,20 @@
                         <input id="confirmPassword" type="password"
                                placeholder="*******" class="input"
                                autocomplete="password"
-                               required
+                               required aria-required="true"
                                v-model="confirmPassword">
                         <span class="icon is-small is-left"><i class="fa fa-lock"></i></span>
                     </div>
                 </div>
                 <div class="field">
-                    <div class="control">
-                        <button id="connexion" class="button is-success"
-                                v-on:click.prevent="signup">
-                            Inscription
-                        </button>
-                        <router-link v-bind:to="{ name: 'home' }"
-                                     class="button is-danger">Annuler
-                        </router-link>
+                    <div class="buttons">
+                        <input id="connexion" class="button is-success"
+                                @click.prevent="signup" value="Inscription">
+                        <input class="button is-danger" value="Annuler"
+                               @click.prevent="$router.push('/')">
                     </div>
                 </div>
+                </form>
             </div>
         </div>
     </div>

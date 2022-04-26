@@ -12,61 +12,62 @@
                         <p class="message-body">{{ success }}</p>
                     </div>
                 </div>
-                <div class="field">
-                    <label for="email" class="label">Email</label>
-                    <div class="control has-icons-left">
-                        <input id="email" type="email" placeholder="e1234567@site.com"
-                               class="input" autocomplete="email" required
-                               v-model="email">
-                        <span class="icon is-small is-left">
-                                <i class="fa fa-envelope"></i></span>
+                <form>
+                    <div class="field">
+                        <label for="email" class="label">Email</label>
+                        <div class="control has-icons-left">
+                            <input id="email" type="email" placeholder="e1234567@site.com"
+                                   class="input" autocomplete="email" required aria-required="true"
+                                   v-model="email">
+                            <span class="icon is-small is-left">
+                                    <i class="fa fa-envelope"></i></span>
+                        </div>
                     </div>
-                </div>
-                <div class="field">
-                    <label for="username" class="label">Username</label>
-                    <div class="control has-icons-left">
-                        <input id="username" type="text" placeholder="e1234567" class="input"
-                               autocomplete="username" required
-                               v-model="username">
-                        <span class="icon is-small is-left">
-                                <i class="fa fa-envelope"></i></span>
+                    <div class="field">
+                        <label for="username" class="label">Username</label>
+                        <div class="control has-icons-left">
+                            <input id="username" type="text" placeholder="e1234567" class="input"
+                                   autocomplete="username" required aria-required="true"
+                                   v-model="username">
+                            <span class="icon is-small is-left">
+                                    <i class="fa fa-envelope"></i></span>
+                        </div>
                     </div>
-                </div>
-                <div class="field">
-                    <label for="password" class="label">Mot de passe</label>
-                    <div class="control has-icons-left">
-                        <input id="password" type="password"
-                               placeholder="*******" class="input"
-                               autocomplete="password"
-                               required
-                               v-model="password">
-                        <span class="icon is-small is-left"><i class="fa fa-lock"></i></span>
+                    <div class="field">
+                        <label for="password" class="label">Mot de passe</label>
+                        <div class="control has-icons-left">
+                            <input id="password" type="password"
+                                   placeholder="*******" class="input"
+                                   autocomplete="password"
+                                   required aria-required="true"
+                                   v-model="password">
+                            <span class="icon is-small is-left"><i class="fa fa-lock"></i></span>
+                        </div>
                     </div>
-                </div>
-                <div class="field">
-                    <label for="confirmPassword" class="label">Confirmation mot de passe</label>
-                    <div class="control has-icons-left">
-                        <input id="confirmPassword" type="password"
-                               placeholder="*******" class="input"
-                               autocomplete="password"
-                               required
-                               v-model="confirmPassword">
-                        <span class="icon is-small is-left"><i class="fa fa-lock"></i></span>
+                    <div class="field">
+                        <label for="confirmPassword" class="label">Confirmation mot de passe</label>
+                        <div class="control has-icons-left">
+                            <input id="confirmPassword" type="password"
+                                   placeholder="*******" class="input"
+                                   autocomplete="password"
+                                   required aria-required="true"
+                                   v-model="confirmPassword">
+                            <span class="icon is-small is-left"><i class="fa fa-lock"></i></span>
+                        </div>
                     </div>
-                </div>
-                <div class="field">
-                    <div class="buttons">
-                        <input id="connexion" class="button is-success"
-                                v-on:click.prevent="update" value="Update">
-                        <input class="button is-danger" value="Annuler"
-                               @click.prevent="$router.push('/')">
+                    <div class="field">
+                        <div class="buttons">
+                            <input id="connexion" class="button is-success"
+                                   @click.prevent="update" value="Update">
+                            <input class="button is-danger" value="Annuler"
+                                   @click.prevent="$router.push('/')">
+                        </div>
+                        <div class="buttons is-right">
+                            <input class="js-modal-trigger button is-danger"
+                                   @click.prevent="showModal = true" value="Supprimer">
+                        </div>
                     </div>
-                    <div class="buttons is-right">
-                        <input class="js-modal-trigger button is-danger"
-                               @click.prevent="showModal = true" value="Supprimer"
-                               >
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>

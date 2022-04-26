@@ -6,36 +6,39 @@
                 <p class="message-body">{{ error }}</p>
             </div>
             <div class="content">
-                <div class="field">
-                    <label for="username" class="label">Username</label>
-                    <div class="control has-icons-left">
-                        <input id="username" type="text" placeholder="e1234567" class="input"
-                               autocomplete="email" required
-                               v-model="username">
-                        <span class="icon is-small is-left"><i class="fa fa-envelope"></i></span>
+                <form>
+                    <div class="field">
+                        <label for="username" class="label">Username</label>
+                        <div class="control has-icons-left">
+                            <input id="username" type="text" placeholder="e1234567" class="input"
+                                   autocomplete="email" required aria-required="true"
+                                   v-model="username">
+                            <span class="icon is-small is-left">
+                                <i class="fa fa-envelope"></i></span>
+                        </div>
                     </div>
-                </div>
-                <div class="field">
-                    <label for="password" class="label">Password</label>
-                    <div class="control has-icons-left">
-                        <input id="password" type="password"
-                               placeholder="*******" class="input"
-                               autocomplete="password"
-                               required
-                               v-model="password">
-                        <span class="icon is-small is-left"><i class="fa fa-lock"></i></span>
+                    <div class="field">
+                        <label for="password" class="label">Password</label>
+                        <div class="control has-icons-left">
+                            <input id="password" type="password"
+                                   placeholder="*******" class="input"
+                                   autocomplete="password"
+                                   required aria-required="true"
+                                   v-model="password">
+                            <span class="icon is-small is-left"><i class="fa fa-lock"></i></span>
+                        </div>
                     </div>
-                </div>
-                <div class="field">
-                    <div class="control">
-                        <button id="connexion" class="button is-success"
-                                v-on:click.prevent="login">
-                            Connexion
-                        </button>
-                        <router-link v-bind:to="{ name: 'home' }"
-                                     class="button is-danger">Annuler</router-link>
+                    <div class="field">
+                        <div class="control">
+                            <button id="connexion" class="button is-success"
+                                    @click.prevent="login">
+                                Connexion
+                            </button>
+                            <router-link v-bind:to="{ name: 'home' }"
+                                         class="button is-danger">Annuler</router-link>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
