@@ -1,6 +1,10 @@
 <template>
     <div class="container">
         <div class="section">
+            <div class="message is-danger" v-if="error!==''" style="white-space: pre;
+                border-color: red; border-width: 2px; border-style: solid;">
+                <p class="message-body">{{ error }}</p>
+            </div>
             <div class="content">
                 <div class="field">
                     <label for="username" class="label">Username</label>
@@ -46,16 +50,24 @@ export default {
         return {
             username: '',
             password: '',
+            error: '',
         };
     },
     methods: {
         async login() {
             //   "username": "e1730934","password": "e1730934"
+            this.error = '';
             const { username, password } = this;
             const body = {
                 username,
                 password,
             };
+            if (username === '') {
+                this.error += 'Veuillez saisir votre nom d\'utilisateur.\n';
+            }
+            if (password === '') {
+                this.error += 'Veuillez saisir votre mot de passe.\n';
+            }
             try {
                 const resToken = await fetch(`${svrURL}/auth/token`, {
                     headers: { 'Content-Type': 'application/json' },
@@ -68,9 +80,14 @@ export default {
                     await this.$router.push('/');
                 } else {
                     console.error('une erreur s\'est produite');
+                    if (this.error === '') {
+                        this.error = 'Mauvais nom d\'utilisateur ou mot de passe.';
+                    }
                 }
             } catch (err) {
-                console.log(err.message);
+                if (this.error === '') {
+                    this.error = 'Une erreur s\'est produite.';
+                }
             }
         },
     },

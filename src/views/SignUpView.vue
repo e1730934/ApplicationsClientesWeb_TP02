@@ -2,13 +2,14 @@
     <div class="container">
         <div class="section">
             <div class="content">
-                <div class="field">
-                    <div class="message is-danger" v-if="error!==''">
-                        <p class="message-body">{{ error }}</p>
-                    </div>
+                <div class="message is-danger" v-if="error!==''" style="white-space: pre;
+                border-color: red; border-width: 2px; border-style: solid;">
+                    <p class="message-body">{{ error }}</p>
                     <div class="message is-success" v-if="success!==''">
                         <p class="message-body">{{ success }}</p>
                     </div>
+                </div>
+                <div class="field">
                     <label for="email" class="label">Email</label>
                     <div class="control has-icons-left">
                         <input id="email" type="email" placeholder="e1234567@site.com"
@@ -83,46 +84,51 @@ export default {
     },
     methods: {
         async signup() {
+            this.error = '';
             const {
                 email,
                 username,
                 password,
                 confirmPassword,
             } = this;
-            const regEmail = (/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
-            const regUsername = (/^[a-zA-Z0-9_]+$/);
-            if ((password !== confirmPassword)) {
-                this.error = ('Les mots de passe ne correspondent pas');
-                return;
-            }
-            if (!regEmail.test(email)) {
-                this.error = ('Email invalide');
-                return;
-            }
+            const regEmail = /@/;
+            const regUsername = (/^\w/);
+
+            if (!regEmail.test(email)) { this.error += ('Le courriel doit contenir le symbole @.\n'); }
+            if (email.length < 4) { this.error += 'Le courriel doit contenir plus de 4 caractères.\n'; }
+
             if (!regUsername.test(username)) {
-                this.error = ('Username invalide');
+                this.error += ('Les caractères permis pour le username sont A-z, a-z, 0-9 et le caractère souligné.\n');
             }
-            await fetch(`${svrURL}/auth/register`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    email,
-                    username,
-                    password,
-                }),
-            })
-                .then((response) => {
-                    if (response.status === 201) {
-                        this.success = ('Inscription réussie, veuillez maintenant vous connecter.');
-                    } else {
-                        this.error = ('Email déjà utilisé');
-                    }
+            if (username.length > 20 || username < 5) { this.error += 'Le username doit contenir au moins 5 caractères et au maximum 20.\n'; }
+            if (password.length < 6) { this.error += 'Le mot de passe doit contenir au moins 6 caractères.\n'; }
+            if ((password !== confirmPassword)) {
+                this.error += ('Les mots de passe ne correspondent pas\n');
+            }
+            if (this.error === '') {
+                await fetch(`${svrURL}/auth/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email,
+                        username,
+                        password,
+                    }),
                 })
-                .catch(() => {
-                    this.error = ('Erreur lors de l\'inscription');
-                });
+                    .then((response) => {
+                        if (response.status === 201) {
+                            this.success = ('Inscription réussie, veuillez maintenant vous connecter.');
+                            this.$router.push({ name: 'login' });
+                        } else {
+                            this.error = response.message;
+                        }
+                    })
+                    .catch(() => {
+                        this.error = ('Erreur lors de l\'inscription');
+                    });
+            }
         },
     },
 };
