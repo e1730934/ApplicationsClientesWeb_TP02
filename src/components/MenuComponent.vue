@@ -1,5 +1,6 @@
 <template>
-    <nav class="navbar" role="navigation" aria-label="main navigation">
+    <header>
+       <nav class="navbar" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
             <div class="navbar-item">&nbsp;</div>
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
@@ -54,6 +55,7 @@
             </div>
         </div>
     </nav>
+    </header>
 </template>
 
 <script>

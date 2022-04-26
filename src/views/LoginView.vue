@@ -3,42 +3,52 @@
         <div class="section">
             <div class="message is-danger" v-if="error!==''" style="white-space: pre;
                 border-color: red; border-width: 2px; border-style: solid;">
-                <p class="message-body">{{ error }}</p>
+                <p role="alert" class="message-body">{{ error }}</p>
             </div>
             <div class="content">
-                <form>
-                    <div class="field">
-                        <label for="username" class="label">Username</label>
-                        <div class="control has-icons-left">
-                            <input id="username" type="text" placeholder="e1234567" class="input"
-                                   autocomplete="email" required aria-required="true"
-                                   v-model="username">
-                            <span class="icon is-small is-left">
+                <main>
+                    <form>
+                        <div class="field">
+                            <label for="username" class="label">Username</label>
+                            <div class="control has-icons-left">
+                                <input id="username" type="text"
+                                       placeholder="e1234567" class="input"
+                                       autocomplete="email" required aria-required="true"
+                                       v-model="username" aria-describedby="descriptionUsername">
+                                <span class="icon is-small is-left">
                                 <i class="fa fa-envelope"></i></span>
+                                <span id="descriptionUsername" class="help is-success is-hidden">
+                                Le nom d'utilisateur.</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="field">
-                        <label for="password" class="label">Password</label>
-                        <div class="control has-icons-left">
-                            <input id="password" type="password"
-                                   placeholder="*******" class="input"
-                                   autocomplete="password"
-                                   required aria-required="true"
-                                   v-model="password">
-                            <span class="icon is-small is-left"><i class="fa fa-lock"></i></span>
+                        <div class="field">
+                            <label for="password" class="label">Password</label>
+                            <div class="control has-icons-left">
+                                <input id="password" type="password"
+                                       placeholder="*******" class="input"
+                                       autocomplete="password"
+                                       required aria-required="true"
+                                       v-model="password"
+                                       aria-describedby="descriptionPassword">
+                                <span class="icon is-small is-left">
+                                    <i class="fa fa-lock"></i></span>
+                                <span id="descriptionPassword" class="help is-success is-hidden">
+                                Le mot de passe de l'utilisateur</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="field">
-                        <div class="control">
-                            <button id="connexion" class="button is-success"
-                                    @click.prevent="login">
-                                Connexion
-                            </button>
-                            <router-link v-bind:to="{ name: 'home' }"
-                                         class="button is-danger">Annuler</router-link>
+                        <div class="field">
+                            <div class="control">
+                                <button id="connexion" class="button is-success"
+                                        @click.prevent="login">
+                                    Connexion
+                                </button>
+                                <router-link v-bind:to="{ name: 'home' }"
+                                             class="button is-danger">Annuler
+                                </router-link>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </main>
             </div>
         </div>
     </div>
@@ -60,7 +70,10 @@ export default {
         async login() {
             //   "username": "e1730934","password": "e1730934"
             this.error = '';
-            const { username, password } = this;
+            const {
+                username,
+                password,
+            } = this;
             const body = {
                 username,
                 password,

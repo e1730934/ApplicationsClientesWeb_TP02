@@ -1,5 +1,6 @@
 <template>
     <div v-if="season!==null">
+        <main>
         <h1 class="title is-1 has-text-centered">{{ season.tvshowTitle }}</h1>
         <h2 class="title is-2 has-text-centered">{{ season.seasonNumber }}</h2>
         <div class="containter">
@@ -10,7 +11,8 @@
                     v-bind:e="e"></episode-component>
             </div>
         </div>
-        <div class="section">
+        </main>
+        <div role="navigation" class="section">
             <nav class="pagination" role="navigation" aria-label="pagination">
                 <button class="pagination-previous" v-if="currentPage>0"
                         v-on:click="this.currentPage -=1">&lt;
@@ -30,7 +32,6 @@
                 </ul>
             </nav>
         </div>
-
     </div>
 </template>
 
