@@ -128,7 +128,31 @@ export default {
             showModal: false,
         };
     },
+    mounted() {
+        this.loadUserinfo();
+    },
     methods: {
+        async loadUserinfo() {
+            const bearerToken = `bearer ${this.$store.state.token}`;
+            await fetch(`${svrURL}/user`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization: bearerToken,
+                },
+            })
+                .then(async (response) => {
+                    if (response.status === 200) {
+                        const data = await response.json();
+                        this.email = data.email;
+                        this.username = data.username;
+                    } else {
+                        this.error = response.message;
+                    }
+                })
+                .catch(() => {
+                    this.error = ('Erreur lors de l\'inscription');
+                });
+        },
         async update() {
             this.error = '';
             const {
