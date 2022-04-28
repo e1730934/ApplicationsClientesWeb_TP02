@@ -12,10 +12,6 @@ import MenuComponent from '@/components/MenuComponent.vue';
 export default {
     name: 'App',
     components: { MenuComponent },
-    data() {
-        return {
-        };
-    },
     mounted() {
         this.loadToken();
     },
