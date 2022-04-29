@@ -2,7 +2,7 @@
     <div class="container">
         <div class="section">
             <div class="content">
-                <div class="messages">
+                <div class="messages" tabindex="0">
                     <div class="message is-danger" v-if="error!==''" style="white-space: pre;
                     border-color: red; border-width: 2px; border-style: solid;">
                         <p role="alert" class="message-body">{{ error }}</p>
@@ -102,7 +102,15 @@ export default {
             success: '',
         };
     },
+    mounted() {
+        this.redirectPage();
+    },
     methods: {
+        redirectPage() {
+            if (this.$store.state.token !== '') {
+                this.$router.push('/');
+            }
+        },
         async signup() {
             this.error = '';
             const {

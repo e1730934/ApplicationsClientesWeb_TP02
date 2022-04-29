@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="section">
-            <div class="message is-danger" v-if="error!==''" style="white-space: pre;
+            <div class="message is-danger" tabindex="0" v-if="error!==''" style="white-space: pre;
                 border-color: red; border-width: 2px; border-style: solid;">
                 <p role="alert" class="message-body">{{ error }}</p>
             </div>
@@ -66,7 +66,15 @@ export default {
             error: '',
         };
     },
+    mounted() {
+        this.redirectPage();
+    },
     methods: {
+        redirectPage() {
+            if (this.$store.state.token !== '') {
+                this.$router.push('/');
+            }
+        },
         async login() {
             //   "username": "e1730934","password": "e1730934"
             this.error = '';

@@ -5,7 +5,7 @@
     <div class="container">
         <div class="section">
             <div class="content">
-                <div class="messages">
+                <div tabindex="0" class="messages">
                     <div class="message is-danger" v-if="error!==''" style="white-space: pre;
                 border-color: red; border-width: 2px; border-style: solid;">
                         <p role="alert" class="message-body">{{ error }}</p>
@@ -25,7 +25,7 @@
                                        v-model="email" aria-describedby="descriptionEmail">
                                 <span class="icon is-small is-left">
                                 <i class="fa fa-envelope"></i></span>
-                                <span id="descriptionEmail" class="help is-success">
+                                <span id="descriptionEmail" class="help is-success is-hidden">
                             Le courriel de l'utilisateur.</span>
                             </div>
                         </div>
@@ -38,7 +38,7 @@
                                        v-model="username" aria-describedby="descriptionUsername">
                                 <span class="icon is-small is-left">
                                 <i class="fa Example of user fa-user"></i></span>
-                                <span id="descriptionUsername" class="help is-success">
+                                <span id="descriptionUsername" class="help is-success is-hidden">
                             Le username doit contenir au moins 5 caractères et au maximum 20.
                             Les caractères permis pour le username sont A-z, a-z,
                             0-9 et le caractère souligné.
@@ -56,7 +56,7 @@
                                        aria-describedby="descriptionMdp">
                                 <span class="icon is-small is-left">
                                     <i class="fa fa-lock"></i></span>
-                                <span id="descriptionMdp" class="help is-success">
+                                <span id="descriptionMdp" class="help is-success is-hidden">
                             Le mot de passe doit contenir au moins 6 caractères.
                         </span>
                             </div>
@@ -101,7 +101,7 @@
                         @click.prevent="showModal = false"></button>
             </header>
             <section class="modal-card-body">
-                Voulez-vous vraiment supprimer votre profile?
+               <p  role="alert"> Voulez-vous vraiment supprimer votre profile?</p>
             </section>
             <footer class="modal-card-foot">
                 <input class="button has-text-weight-bold is-danger"
@@ -128,7 +128,15 @@ export default {
             showModal: false,
         };
     },
+    mounted() {
+        this.redirectPage();
+    },
     methods: {
+        redirectPage() {
+            if (this.$store.state.token === '') {
+                this.$router.push('/');
+            }
+        },
         async update() {
             this.error = '';
             const {
