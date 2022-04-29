@@ -67,13 +67,14 @@ export default {
         };
     },
     mounted() {
-        this.redirectPage();
+        this.loadPage();
     },
     methods: {
-        redirectPage() {
+        loadPage() {
             if (this.$store.state.token !== '') {
                 this.$router.push('/');
             }
+            this.username = this.$store.state.username;
         },
         async login() {
             //   "username": "e1730934","password": "e1730934"
