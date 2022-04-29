@@ -156,6 +156,7 @@ export default {
                     .then((response) => {
                         if (response.status === 201) {
                             this.success = ('Inscription réussie, veuillez maintenant vous connecter.');
+                            this.$store.dispatch('setUsername', username);
                             this.$router.push({ name: 'login' });
                         } else {
                             this.error = response.message;
