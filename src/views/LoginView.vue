@@ -66,7 +66,15 @@ export default {
             error: '',
         };
     },
+    mounted() {
+        this.loadUsername();
+    },
     methods: {
+        loadUsername() {
+            if (this.$store.state.username) {
+                this.username = this.$store.state.username;
+            }
+        },
         async login() {
             //   "username": "e1730934","password": "e1730934"
             this.error = '';
