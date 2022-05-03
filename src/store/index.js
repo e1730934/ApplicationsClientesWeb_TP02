@@ -4,6 +4,7 @@ export default createStore({
     state: {
         token: '',
         username: '',
+        history: [],
     },
     getters: {},
     mutations: {
@@ -14,6 +15,9 @@ export default createStore({
         setUsername(state, username) {
             state.username = username;
         },
+        setHistory(state, history) {
+            state.history = history;
+        },
     },
     actions: {
         setToken({ commit }, token) {
@@ -21,6 +25,9 @@ export default createStore({
         },
         setUsername({ commit }, username) {
             commit('setUsername', username);
+        },
+        setHistory({ commit }, history) {
+            commit('setHistory', history);
         },
     },
     modules: {},

@@ -8,6 +8,7 @@ import SignUpView from '@/views/SignUpView.vue';
 import ProfileView from '@/views/ProfileView.vue';
 import AboutView from '@/views/AboutView.vue';
 import HistoryView from '@/views/HistoryView.vue';
+import PlayEpisodeView from '@/views/PlayEpisodeView.vue';
 
 const routes = [
     {
@@ -54,6 +55,11 @@ const routes = [
         path: '/history',
         name: 'history',
         component: HistoryView,
+    },
+    {
+        path: '/playEpisode/:id',
+        name: 'playEpisode',
+        component: PlayEpisodeView,
     },
 ];
 

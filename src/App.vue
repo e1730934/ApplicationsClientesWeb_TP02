@@ -8,6 +8,7 @@
 <script>
 
 import MenuComponent from '@/components/MenuComponent.vue';
+import { svrURL } from '@/constants';
 
 export default {
     name: 'App',
@@ -21,6 +22,19 @@ export default {
             const t = sessionStorage.getItem('token');
             if (t) {
                 this.$store.dispatch('setToken', t);
+                this.fetchHistory();
+            }
+        },
+        async fetchHistory() {
+            const res = await fetch(`${svrURL}/user/history`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${this.$store.state.token}`,
+                },
+            });
+            if (res.ok) {
+                this.$store.dispatch('setHistory', await res.json());
             }
         },
 
