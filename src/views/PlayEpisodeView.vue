@@ -61,10 +61,10 @@ export default {
 <style scoped>
 video {
     width: 100vw;
-    height: 100vh;
+    height: 94vh;
     object-fit: cover;
     position: fixed;
-    top: 0;
+    top: 6vh;
     left: 0;
     z-index: -1;
 }
