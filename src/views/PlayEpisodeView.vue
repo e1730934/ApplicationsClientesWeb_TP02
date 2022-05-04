@@ -1,9 +1,9 @@
 <template>
-    <div class="container" v-if="episodeData!==null">
+    <div class="container">
         <div class="section">
-            <div class="content">
+            <div class="content"  v-if="$store.state.token===''">
                 <div tabindex="0" class="messages">
-                    <div class="message is-danger" v-if="$store.state.token===''"
+                    <div class="message is-danger"
                          style="white-space: pre;
                 border-color: red; border-width: 2px; border-style: solid;">
                         <p role="alert" class="message-body">
@@ -16,7 +16,7 @@
                 </div>
             </div>
         </div>
-        <main v-if="$store.state.token!==''">
+        <main v-if="$store.state.token!=='' && episodeData!==null">
             <video autoplay controls muted>
                 <source v-bind:src="episodeData.videoURL" type="video/mp4">
             </video>
@@ -31,7 +31,6 @@ export default {
     data() {
         return {
             episodeData: null,
-            error: false,
         };
     },
     mounted() {
@@ -39,18 +38,20 @@ export default {
     },
     methods: {
         async fetchEpisodes() {
-            const {
-                id,
-            } = this.$route.params;
-            const response = await fetch(`${svrURL}/viewepisode?episodeId=${id}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${this.$store.state.token}`,
-                },
-            });
-            if (response.ok) {
-                this.episodeData = await response.json();
+            if (this.$store.state.token !== '') {
+                const {
+                    id,
+                } = this.$route.params;
+                const response = await fetch(`${svrURL}/viewepisode?episodeId=${id}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${this.$store.state.token}`,
+                    },
+                });
+                if (response.ok) {
+                    this.episodeData = await response.json();
+                }
             }
         },
     },
