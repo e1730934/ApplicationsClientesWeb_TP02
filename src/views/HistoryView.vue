@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" v-if="chuncked!==[]">
         <div class="section">
             <div class="has-text-centered">
                 <h1 class="title is-1">Historique</h1>
@@ -53,8 +53,6 @@ export default {
             nbrEpisodesPerPage: 6,
         };
     },
-    methods: {
-    },
     computed: {
         pagination() {
             return Math.ceil(this.$store.state.history.length / this.nbrEpisodesPerPage);
@@ -69,6 +67,16 @@ export default {
             });
             return chunkedTvShows;
         },
+    },
+    methods: {
+        redirectPage() {
+            if (this.$store.state.token === '') {
+                this.$router.push('/');
+            }
+        },
+    },
+    mounted() {
+        this.redirectPage();
     },
 };
 </script>
