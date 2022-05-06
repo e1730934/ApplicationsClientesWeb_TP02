@@ -102,6 +102,7 @@ export default {
                 if (resToken.ok) {
                     const data = await resToken.json();
                     this.$store.dispatch('setToken', data.token);
+                    this.$store.dispatch('setUsername', username);
                     await this.$router.push('/');
                 } else {
                     console.error('une erreur s\'est produite');

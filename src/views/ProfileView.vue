@@ -130,12 +130,26 @@ export default {
     },
     mounted() {
         this.redirectPage();
+        this.loadPage();
     },
     methods: {
         redirectPage() {
             if (this.$store.state.token === '') {
                 this.$router.push('/');
             }
+        },
+        async loadPage() {
+            const bearerToken = `bearer ${this.$store.state.token}`;
+            const userDataRaw = await fetch(`${svrURL}/user`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization: bearerToken,
+                },
+            });
+            const userData = await userDataRaw.json();
+            this.email = userData.email;
+            this.username = userData.username;
         },
         async update() {
             this.error = '';
