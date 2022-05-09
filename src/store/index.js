@@ -3,6 +3,7 @@ import { createStore } from 'vuex';
 export default createStore({
     state: {
         token: '',
+        username: '',
         history: [],
     },
     getters: {},
@@ -11,6 +12,9 @@ export default createStore({
             state.token = token;
             sessionStorage.setItem('token', token);
         },
+        setUsername(state, username) {
+            state.username = username;
+        },
         setHistory(state, history) {
             state.history = history;
         },
@@ -18,6 +22,9 @@ export default createStore({
     actions: {
         setToken({ commit }, token) {
             commit('setToken', token);
+        },
+        setUsername({ commit }, username) {
+            commit('setUsername', username);
         },
         setHistory({ commit }, history) {
             commit('setHistory', history);
