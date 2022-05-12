@@ -69,6 +69,8 @@ export default {
     methods: {
         async signOut() {
             this.$store.dispatch('setToken', '');
+            this.$store.dispatch('setUsername', '');
+            this.$store.dispatch('setHistory', '');
             await this.$router.push('/');
         },
         makeBurger() {
