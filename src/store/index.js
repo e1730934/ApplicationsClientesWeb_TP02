@@ -17,6 +17,7 @@ export default createStore({
         },
         setHistory(state, history) {
             state.history = history;
+            sessionStorage.setItem('history', JSON.stringify(history));
         },
     },
     actions: {

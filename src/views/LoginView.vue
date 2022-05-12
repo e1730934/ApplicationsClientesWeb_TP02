@@ -70,6 +70,18 @@ export default {
         this.loadPage();
     },
     methods: {
+        async fetchHistory() {
+            const res = await fetch(`${svrURL}/user/history`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${this.$store.state.token}`,
+                },
+            });
+            if (res.ok) {
+                this.$store.dispatch('setHistory', await res.json());
+            }
+        },
         loadPage() {
             if (this.$store.state.token !== '') {
                 this.$router.push('/');
@@ -103,6 +115,7 @@ export default {
                     const data = await resToken.json();
                     this.$store.dispatch('setToken', data.token);
                     this.$store.dispatch('setUsername', username);
+                    await this.fetchHistory();
                     await this.$router.push('/');
                 } else {
                     console.error('une erreur s\'est produite');

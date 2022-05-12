@@ -8,7 +8,6 @@
 <script>
 
 import MenuComponent from '@/components/MenuComponent.vue';
-import { svrURL } from '@/constants';
 
 export default {
     name: 'App',
@@ -22,27 +21,24 @@ export default {
             const t = sessionStorage.getItem('token');
             if (t) {
                 this.$store.dispatch('setToken', t);
-                this.fetchHistory();
+                this.loadHistory();
             }
         },
-        async fetchHistory() {
-            const res = await fetch(`${svrURL}/user/history`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${this.$store.state.token}`,
-                },
-            });
-            if (res.ok) {
-                this.$store.dispatch('setHistory', await res.json());
+        // Charger historique
+        loadHistory() {
+            const h = sessionStorage.getItem('history');
+            if (h) {
+                this.$store.dispatch('setHistory', JSON.parse(h));
             }
         },
-
     },
     watch: {
         // Lorsque token change de valeur, stocker dans sessionStorage
         'this.$store.state.token': function (newToken) {
             sessionStorage.setItem('token', newToken);
+        },
+        'this.$store.state.history': function (newHistory) {
+            sessionStorage.setItem('history', JSON.stringify(newHistory));
         },
     },
 };
