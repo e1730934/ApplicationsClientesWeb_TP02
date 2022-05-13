@@ -77,6 +77,7 @@ export default {
     },
     mounted() {
         this.redirectPage();
+        this.$store.dispatch('setHistory');
     },
 };
 </script>

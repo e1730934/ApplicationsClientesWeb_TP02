@@ -57,6 +57,7 @@ export default {
     },
     mounted() {
         this.fetchEpisodes();
+        this.$store.dispatch('setHistory');
     },
     computed: {
         pagination() {

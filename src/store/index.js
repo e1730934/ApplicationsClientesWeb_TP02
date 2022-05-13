@@ -1,4 +1,5 @@
 import { createStore } from 'vuex';
+import { svrURL } from '@/constants';
 
 export default createStore({
     state: {
@@ -27,8 +28,17 @@ export default createStore({
         setUsername({ commit }, username) {
             commit('setUsername', username);
         },
-        setHistory({ commit }, history) {
-            commit('setHistory', history);
+        async setHistory({ commit }) {
+            const res = await fetch(`${svrURL}/user/history`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${this.state.token}`,
+                },
+            });
+            if (res.ok) {
+                commit('setHistory', await res.json());
+            }
         },
     },
     modules: {},
