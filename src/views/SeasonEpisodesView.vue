@@ -52,12 +52,12 @@ export default {
     methods: {
         async fetchEpisodes() {
             const response = await fetch(`${svrURL}/episodes/?seasonId=${this.$route.params.id}`);
+            this.$store.dispatch('setHistory');
             if (response.ok) this.season = await response.json();
         },
     },
     mounted() {
         this.fetchEpisodes();
-        this.$store.dispatch('setHistory');
     },
     computed: {
         pagination() {
